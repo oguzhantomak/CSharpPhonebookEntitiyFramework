@@ -87,6 +87,7 @@
             this.btnOrnek5.TabIndex = 0;
             this.btnOrnek5.Text = "Örnek 5";
             this.btnOrnek5.UseVisualStyleBackColor = true;
+            this.btnOrnek5.Click += new System.EventHandler(this.BtnOrnek5_Click);
             // 
             // button6
             // 
@@ -115,6 +116,7 @@
             this.btnOrnek6.TabIndex = 0;
             this.btnOrnek6.Text = "Örnek 6";
             this.btnOrnek6.UseVisualStyleBackColor = true;
+            this.btnOrnek6.Click += new System.EventHandler(this.BtnOrnek6_Click);
             // 
             // dgv1
             // 

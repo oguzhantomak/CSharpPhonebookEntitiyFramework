@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.SqlServer;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -90,11 +91,11 @@ namespace EntitiyFrameworkSorgular
             var result = from o in db.Orders
                          select new
                          {
-                             Musteri= o.Customer.CompanyName,
+                             Musteri = o.Customer.CompanyName,
                              Personel = o.Employee.FirstName + " " + o.Employee.LastName,
                              SiparisNo = o.OrderID,
-                             SiparisTarihi=o.OrderDate,
-                             KargoAdi=o.Shipper.CompanyName
+                             SiparisTarihi = o.OrderDate,
+                             KargoAdi = o.Shipper.CompanyName
 
                          };
             dgv1.DataSource = result.ToList();
@@ -162,10 +163,114 @@ namespace EntitiyFrameworkSorgular
             db.Categories.FirstOrDefault(x => x.CategoryName == "Beverages").Products.Add(new Product
             {
                 ProductName = "Kola 2",
-            UnitPrice = 5.00m,
-            UnitsInStock = 500,
+                UnitPrice = 5.00m,
+                UnitsInStock = 500,
             });
             db.SaveChanges();
+        }
+
+        private void BtnOrnek5_Click(object sender, EventArgs e)
+        {
+            //Çalışanların adını, soyadını, doğum tarihini ve yaşını getiren sorgu
+            // select FirstName,LastName,BirthDate,YEAR(GETDATE()) - YEAR(BirthDate) as AGE from Employees veya
+            // select FirstName,LastName,BirthDate,DATEDIFF(YEAR,BirthDate,GETDATE()) as AGE from Employees
+
+            // -------- Linq to Entity -------- \\
+
+            //              dgv1.DataSource = db.Employees
+            //                  .Select(x => new
+            //                  {
+            //                      Personel = x.FirstName + " " + x.LastName,
+            //                      DogumTarihi= x.BirthDate,
+            //                      Yas= DateTime.Now.Year - x.BirthDate.Value.Year,
+            //                  })
+            //                  .ToList();
+
+            // -------- Linq to SQL -------- \\
+
+            var result = from x in db.Employees
+                         select new
+                         {
+                             Personel = x.FirstName + " " + x.LastName,
+                             DogumTarihi = x.BirthDate,
+                             Yas = DateTime.Now.Year - x.BirthDate.Value.Year,
+                         };
+            dgv1.DataSource = result.ToList();
+
+
+
+
+        }
+
+        private void BtnOrnek6_Click(object sender, EventArgs e)
+        {
+            // Kategorilerine göre stoktaki ürün sayısını veren sorgu
+            // select CategoryName, SUM(p.UnitsInStock) as toplam from Products as p join Categories as c on p.CategoryID = c.CategoryID group by CategoryName 
+
+
+            // -------- Linq to Entity -------- \\
+
+            //              dgv1.DataSource = db.Products
+            //                  .GroupBy(x=>x.Category.CategoryName)
+            //                  .Select(x => new
+            //                  {
+            //                      KategoriAdi = x.Key,
+            //                      ToplamUrun = x.Sum(s=>s.UnitsInStock)
+            //                  })
+            //                  .ToList();
+
+
+            // -------- Linq to SQL -------- \\
+
+
+            //              var result = from p in db.Products
+            //                           group p by p.Category.CategoryName into g
+            //                           select new
+            //                           {
+            //                               KategoriAdi = g.Key,
+            //                               Toplam = g.Sum(p => p.UnitsInStock)
+            //                           };
+            //              dgv1.DataSource = result.ToList();
+
+            // Başka örnek
+            // select c.CategoryID,c.CategoryName,c.Description from Products as p join Categories as c on p.CategoryID=c.CategoryID group by c.CategoryID, c.CategoryName, c.Description
+
+
+            // -------- Linq to Entity -------- \\
+
+            //          dgv1.DataSource = db.Products
+            //              .GroupBy(x => new
+            //              {
+            //                  x.CategoryID,
+            //                  x.Category.CategoryName,
+            //                  x.Category.Description
+            //              })
+            //              .Select(x => new
+            //              {
+            //                  x.Key.CategoryID,
+            //                  x.Key.CategoryName,
+            //                  x.Key.Description,
+            //                  Toplam = x.Sum(s => s.UnitsInStock)
+            //              })
+            //              .ToList();
+
+
+            var result = from p in db.Products
+                         group p by new {
+                         p.CategoryID,
+                         p.Category.CategoryName,
+                         p.Category.Description
+                         } into g
+                         select new
+                         {
+                             KategoriId = g.Key.CategoryID,
+                             KategoriAdi = g.Key.CategoryName,
+                             Toplam = g.Sum(p => p.UnitsInStock),
+                             Aciklama = g.Key.Description,
+                         };
+            dgv1.DataSource = result.ToList();
+
+
         }
     }
 }
