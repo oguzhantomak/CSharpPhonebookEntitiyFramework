@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneBook", "PhoneBook\Phon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntitiyFrameworkSorgular", "EntitiyFrameworkSorgular\EntitiyFrameworkSorgular.csproj", "{57F2B6CB-693C-46DA-BDCB-69C9F8A45C18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFConfigurations", "EFConfigurations\EFConfigurations.csproj", "{E8C13337-F82D-4623-A575-F3489695C13D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{57F2B6CB-693C-46DA-BDCB-69C9F8A45C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57F2B6CB-693C-46DA-BDCB-69C9F8A45C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57F2B6CB-693C-46DA-BDCB-69C9F8A45C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8C13337-F82D-4623-A575-F3489695C13D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8C13337-F82D-4623-A575-F3489695C13D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8C13337-F82D-4623-A575-F3489695C13D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8C13337-F82D-4623-A575-F3489695C13D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
